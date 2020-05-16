@@ -1,0 +1,80 @@
+﻿@using jaj.Misc
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Potrebni meta tagovi -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Team 7</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-info">
+        <div class="row-sm-3">
+            <a class="navbar-brand" href="/videoList/Index">Team 7</a>
+
+
+        </div>
+        <div class="row-sm-3">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="">
+                <button class="btn btn-dark my-2 my-sm-0" type="submit">Traži</button>
+            </form>
+        </div>
+        <ul class="nav navbar-nav navbar-right ">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li>@Html.ActionLink(((User as LoggedInUser).Username), "Index", "videoList")</li>
+
+                <li>@Html.ActionLink("Log out", "Logout", "User")</li>
+            }
+            else
+            {
+                <li>@Html.ActionLink("Log in", "Login", "user")</li>
+            }
+        </ul>
+        <div class="row-sm-3">
+            <div class="menu-wrap">
+                <input type="checkbox" class="toggler">
+                <div class="hamburger"><div></div></div>
+                <div class="menu">
+                    <div>
+                        <div>
+                            <ul>
+                                <li><a href="/videoList/Index">Početna</a></li>
+                                <li><a href="#">Profil</a></li>
+                                <li><a href="#">Upload</a></li>
+                                <li><a href="#">Favoriti</a></li>
+                                <li><a href="#">Postavke</a></li>
+                                <li><a href="/User/Registration">Registracija</a></li>
+                                <li><a href="/User/Login">Prijava</a></li>
+                                <li><a href="/User/Logout">Odjava</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Team7</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
