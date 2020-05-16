@@ -203,8 +203,144 @@ namespace jaj.Controllers
             return RedirectToAction("Login", "User");
         }
 
+        [HttpGet]
+        public ActionResult Edit()
+        {
+            using (DbBaza dc = new DbBaza())
+            {
 
-        
+                if (User.Identity.IsAuthenticated)
+                {
+
+                    string username = User.Identity.GetUserName();
+                    var user1 = dc.userInfo.FirstOrDefault(x => x.Username == username);
+
+                    //// Novi objekt klase userEdit
+                    userEdit user2 = new userEdit();
+
+                    
+                    user2.Username = user1.Username;
+                    user2.Email = user1.Email;
+                    user2.FavTag = user1.FavTag;
+                    user2.profilePicture = user1.profilePicture;
+
+                    return View(user2);
+                }
+
+                else
+                {
+                    return RedirectToAction("Login", "User");
+                }
+
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult Edit(userEdit user2)
+        {
+
+
+
+            using (DbBaza dc = new DbBaza())
+            {
+
+                string username = User.Identity.GetUserName();
+                var wholeUser = dc.userInfo.FirstOrDefault(x => x.Username == username);
+
+
+                //int idUser = (int)TempData["mydata"];
+                //var wholeUser = dc.userInfo.FirstOrDefault(x => x.UserID == idUser);
+
+
+
+                // Baca exception na user2.userInfo
+                //string fileName = Path.GetFileNameWithoutExtension(user2.userInfo.FileName);
+                //string extension = Path.GetExtension(user2.userInfo.FileName);
+
+                //fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                //user2.profilePicture = "~/PPDir/" + fileName;
+                //fileName = Path.Combine(Server.MapPath("~/PPDir/"), fileName);
+                //user2.userInfo.SaveAs(fileName);
+
+                var ajdi = wholeUser.UserID;
+
+                if (!String.IsNullOrWhiteSpace(user2.Email))
+                {
+                    
+                    var emailTaken = dc.userInfo.Any(x => x.Email == user2.Email && x.UserID != ajdi);
+                    if (emailTaken)
+                    {
+                        ModelState.AddModelError("Email", "This Email is already taken");
+                    }
+                }
+
+                if (!String.IsNullOrWhiteSpace(user2.Username))
+                {
+                    var usernameTaken = dc.userInfo.Any(x => x.Username == user2.Username && x.UserID != ajdi);
+                    if (usernameTaken)
+                    {
+                        ModelState.AddModelError("Username", "This Username is already taken");
+                    }
+                }
+
+
+
+                if (ModelState.IsValid)
+                {
+                    var tempUsername = wholeUser.Username;
+                    wholeUser.Email = user2.Email;
+                    wholeUser.Username = user2.Username;
+                    wholeUser.FavTag = user2.FavTag;
+
+
+                    dc.Entry(wholeUser).State = System.Data.Entity.EntityState.Modified;
+                    dc.Configuration.ValidateOnSaveEnabled = false;
+                    string usernameuser = wholeUser.Username;
+                    dc.SaveChanges();
+                    if(wholeUser.Username != tempUsername)
+                    {
+                        LoggedInUser userIn = new LoggedInUser(wholeUser);
+                        
+                        LoggedInUserSerializeModel serializeUser = new LoggedInUserSerializeModel();
+                        serializeUser.CopyFromUser(userIn);
+                        
+                        JavaScriptSerializer serializer = new JavaScriptSerializer();
+                        
+                        string userInformation = serializer.Serialize(serializeUser);                       
+                        FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
+                            1, // Verzija
+                            userIn.Identity.Name, // Ime tiketa,korisnicko ime jer smo postavili Identity.Name na username
+                            DateTime.Now, // Vrijeme trajanja ticketa - od
+                            DateTime.Now.AddDays(1), // Vrijeme trajanja ticketa - do - jedan dan traje
+                            false, // isPersistent
+                            userInformation); // Korisnicki podaci koji su serijalizirani
+                        
+                        string ticketEncrypted = FormsAuthentication.Encrypt(authTicket);
+                      
+                        HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, ticketEncrypted);
+                        
+                        Response.Cookies.Add(cookie);
+
+                        return RedirectToAction("Registration", "User");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "videoList");
+                    }
+                }
+
+
+
+                return View(user2);
+
+
+            }
+
+        }
+
+
+
 
     }
 }

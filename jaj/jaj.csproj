@@ -246,6 +246,7 @@
     <Compile Include="Models\DbBaza.cs" />
     <Compile Include="Misc\ILoggedInUser.cs" />
     <Compile Include="Models\user.cs" />
+    <Compile Include="Models\userEdit.cs" />
     <Compile Include="Models\userLogin.cs" />
     <Compile Include="Models\video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -292,6 +293,7 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Upload\videoPage.cshtml" />
     <Content Include="Views\videoList\Index.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
