@@ -34,6 +34,7 @@ namespace jaj
                 LoggedInUserSerializeModel serializeModel = serializer.Deserialize<LoggedInUserSerializeModel>(authTicket.UserData);
 
                 LoggedInUser user1 = new LoggedInUser(authTicket.Name);
+                user1.profilePicture = serializeModel.profilePicture;
 
 
 

@@ -11,6 +11,9 @@ namespace jaj.Models
     {
         string Username { get; set; }
         string Power { get; set; }
+        string profilePicture { get; set; }
+
+
 
     }
 }

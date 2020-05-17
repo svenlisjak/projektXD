@@ -300,6 +300,9 @@ namespace jaj.Controllers
                     dc.SaveChanges();
                     if(wholeUser.Username != tempUsername)
                     {
+
+                        // Ako se promjeni username onda se stvara novi autorizacijski cookie,nisam kopiral opet sve komentare za svaku
+                        // liniju jer sve pise na login post metodi
                         LoggedInUser userIn = new LoggedInUser(wholeUser);
                         
                         LoggedInUserSerializeModel serializeUser = new LoggedInUserSerializeModel();

@@ -30,7 +30,10 @@
         <ul class="nav navbar-nav navbar-right ">
             @if (User.Identity.IsAuthenticated)
             {
-                <li>@Html.ActionLink(((User as LoggedInUser).Username), "Index", "videoList")</li>
+
+                <li>@Html.ActionLink(((User as LoggedInUser).Username), "Index", "Home")</li>
+                <li><img src="@Url.Content((User as LoggedInUser).profilePicture)" /></li>
+
 
                 <li>@Html.ActionLink("Log out", "Logout", "User")</li>
             }
