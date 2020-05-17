@@ -204,3 +204,16 @@ html {
     margin: 0 auto;
     text-align: center;
 }
+
+.username-style {
+    align-items: center;
+    justify-content: center;
+}
+    .username-style > a {
+        color: inherit;
+        text-decoration: none;
+        color: black;
+        font-size: 2rem;
+        top: 3rem;
+        padding: 1rem;
+    }

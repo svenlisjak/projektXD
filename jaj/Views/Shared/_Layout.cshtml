@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>Team 7</title>
+    <title>Team o7</title>
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -30,61 +30,66 @@
 
 
         <div class="row-sm-3">
-            <ul class="nav navbar-nav navbar-right ">
-                @if (User.Identity.IsAuthenticated)
-                {
 
-                    <li><img src="@Url.Content((User as LoggedInUser).profilePicture)" style="width:32px; height:32px;" /></li>
+            @if (!User.Identity.IsAuthenticated)
+            {
 
-                }
-            </ul>
-        </div>
+            }
+            else
+            {
+                <div class="col-md-6">
+                    <div class="username-style">
+                        <a> @Html.ActionLink(((User as LoggedInUser).Username), "Index", "videoList")</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <img src="@Url.Content((User as LoggedInUser).profilePicture)" style="width:48px; height:48px;" />
+                </div>
+            }
 
-
-
-
-        <div class="row-sm-3">
-            <div class="menu-wrap">
-                <input type="checkbox" class="toggler">
-                <div class="hamburger"><div></div></div>
-                <div class="menu">
-                    <div>
-                        <div>
-                            <ul>
-                                <li><a href="/videoList/Index">Početna</a></li>
+           </div>
 
 
 
-                                @if (!User.Identity.IsAuthenticated)
-                                {
 
-                                    <li><a href="/User/Registration">Registracija</a></li>
-                                    <li><a href="/User/Login">Prijava</a></li>
-                                }
-                                else
-                                {
-                                    <li><a href="#">Profil</a></li>
-                                    <li><a href="#">Upload</a></li>
-                                    <li><a href="#">Favoriti</a></li>
-                                    <li><a href="#">Postavke</a></li>
-                                    <li><a href="/User/Edit">Edit profile</a></li>
-                                    <li><a href="/User/Logout">Odjava</a></li>
-                                }
+                <div class="row-sm-3">
+                    <div class="menu-wrap">
+                        <input type="checkbox" class="toggler">
+                        <div class="hamburger"><div></div></div>
+                        <div class="menu">
+                            <div>
+                                <div>
+                                    <ul>
+                                        <li><a href="/videoList/Index">Home</a></li>
 
+                                        @if (!User.Identity.IsAuthenticated)
+                                        {
 
-                            </ul>
+                                            <li><a href="/User/Registration">Register</a></li>
+                                            <li><a href="/User/Login">Login</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a href="#">Profile</a></li>
+                                            <li><a href="#">Upload</a></li>
+                                            <li><a href="#">Favorites</a></li>
+                                            <li><a href="#">Settings</a></li>
+                                            <li><a href="/User/Edit">Edit profile</a></li>
+                                            <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+                                        }
+
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </nav>
+</nav>
 
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            
         </footer>
     </div>
 
@@ -95,4 +100,3 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
-
