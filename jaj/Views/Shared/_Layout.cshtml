@@ -24,24 +24,25 @@
         <div class="row-sm-3">
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="">
-                <button class="btn btn-dark my-2 my-sm-0" type="submit">Traži</button>
+                <button class="btn btn-warning my-2 my-sm-0" type="submit">Traži</button>
             </form>
         </div>
-        <ul class="nav navbar-nav navbar-right ">
-            @if (User.Identity.IsAuthenticated)
-            {
-
-                <li>@Html.ActionLink(((User as LoggedInUser).Username), "Index", "Home")</li>
-                <li><img src="@Url.Content((User as LoggedInUser).profilePicture)" /></li>
 
 
-                <li>@Html.ActionLink("Log out", "Logout", "User")</li>
-            }
-            else
-            {
-                <li>@Html.ActionLink("Log in", "Login", "user")</li>
-            }
-        </ul>
+        <div class="row-sm-3">
+            <ul class="nav navbar-nav navbar-right ">
+                @if (User.Identity.IsAuthenticated)
+                {
+
+                    <li><img src="@Url.Content((User as LoggedInUser).profilePicture)" style="width:32px; height:32px;" /></li>
+
+                }
+            </ul>
+        </div>
+
+
+
+
         <div class="row-sm-3">
             <div class="menu-wrap">
                 <input type="checkbox" class="toggler">
@@ -51,13 +52,25 @@
                         <div>
                             <ul>
                                 <li><a href="/videoList/Index">Početna</a></li>
-                                <li><a href="#">Profil</a></li>
-                                <li><a href="#">Upload</a></li>
-                                <li><a href="#">Favoriti</a></li>
-                                <li><a href="#">Postavke</a></li>
-                                <li><a href="/User/Registration">Registracija</a></li>
-                                <li><a href="/User/Login">Prijava</a></li>
-                                <li><a href="/User/Logout">Odjava</a></li>
+
+
+
+                                @if (!User.Identity.IsAuthenticated)
+                                {
+
+                                    <li><a href="/User/Registration">Registracija</a></li>
+                                    <li><a href="/User/Login">Prijava</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="#">Profil</a></li>
+                                    <li><a href="#">Upload</a></li>
+                                    <li><a href="#">Favoriti</a></li>
+                                    <li><a href="#">Postavke</a></li>
+                                    <li><a href="/User/Edit">Edit profile</a></li>
+                                    <li><a href="/User/Logout">Odjava</a></li>
+                                }
+
 
                             </ul>
                         </div>
@@ -71,9 +84,11 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Team7</p>
+            
         </footer>
     </div>
+
+    <footer id="footer"><p>&copy; @DateTime.Now.Year - Team7</p></footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

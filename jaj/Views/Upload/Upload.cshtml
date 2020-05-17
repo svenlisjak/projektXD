@@ -3,19 +3,21 @@
     ViewBag.Title = "Upload";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Upload</h2>
 
+    <h2 class="upload-naslov">Upload</h2>
 @using (Html.BeginForm("Add", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-
+<div class="upload-forma">
     <div class="form-horizontal">
-        <h4>video</h4>
+        
         <hr />
         @*
             Ime video
         *@
         <div class="form-group">
-            @Html.LabelFor(model => model.videoName, new { @class = "control-label col-md-2" })
+           <div class="col-md-2">
+               <label for="videoName">Name</label>
+            </div>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.videoName)
                 @Html.ValidationMessageFor(model => model.videoName)
@@ -24,47 +26,55 @@
         @*
             Opis video
         *@
-        <div class="form-group">
-            @Html.LabelFor(model => model.description, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.description)
-                @Html.ValidationMessageFor(model => model.description)
-            </div>
+    <div class="form-group">
+        <div class="col-md-2">
+            <label for="description">Description</label>
         </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.description)
+            @Html.ValidationMessageFor(model => model.description)
+        </div>
+    </div>
         @*
             Upload video file
         *@
-        <div class="form-group">
-            @Html.LabelFor(model => model.videoPath, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="videoFile" required>
-            </div>
+
+    <div class="form-group">
+        <div class="col-md-2">
+            <label for="videoFile">Video</label>
         </div>
+        <div class="col-md-10">
+            <input type="file" name="videoFile" required>
+        </div>
+    </div>
         @*
             odabir tag (kategorije)
         *@
-        <div class="form-group">
-            @Html.LabelFor(model => model.tag, new { @class = "control-label col-md-2" })
-            @Html.DropDownListFor(model => model.tag, new SelectList(new List<object>
-               {
-                 new {value = "Gaming" , text="Gaming"},
-                 new {value = "Lifestyle" , text="Lifestyle"},
-                 new {value = "Music" , text="Music"},
-                 new {value = "Sport" , text="Sport"},
-                 new {value = "Autism" , text="Autism"},
-                   }, "value", "text"))
+    <div class="form-group">
+        <div class="col-md-2">
+            <label for="tag">Tag</label>
         </div>
+        @Html.DropDownListFor(model => model.tag, new SelectList(new List<object>
+           {
+             new {value = "Gaming" , text="Gaming"},
+             new {value = "Lifestyle" , text="Lifestyle"},
+             new {value = "Music" , text="Music"},
+             new {value = "Sport" , text="Sport"},
+             new {value = "Autism" , text="Autism"},
+               }, "value", "text"))
+    </div>
         @*
             gumb za predaju sranja
         *@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-warning" />
             </div>
         </div>
     </div>
+</div>
 }
-<div>
+<div class="upload-forma">
     @Html.ActionLink("Show video", "videoPage")
 </div>
 

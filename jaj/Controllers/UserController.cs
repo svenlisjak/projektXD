@@ -41,7 +41,7 @@ namespace jaj.Controllers
             user1.profilePicture = "~/PPDir/" + fileName;
             fileName = Path.Combine(Server.MapPath("~/PPDir/"), fileName);
             user1.userInfo.SaveAs(fileName);
-
+            
             if (!String.IsNullOrEmpty(user1.Username))
             {
                 var TakenUsername = dc.userInfo.Any(x => x.Username == user1.Username);
